@@ -20,12 +20,13 @@ List<String> imageUrl = [
 class Article {
   int id;
   String? title;
-  String? about;
-  DateTime? date;
+  String? headerTitle;
+  String? text;
+  DateTime? addDate;
   String? category;
   List<String>? images;
-  Article(
-      this.id, this.title, this.about, this.date, this.category, this.images);
+  Article(this.id, this.title, this.headerTitle, this.text, this.addDate,
+      this.category, this.images);
 }
 
 class Articles {
@@ -34,13 +35,14 @@ class Articles {
   Articles(this.articlesList, this.categoryList);
 }
 
-Articles createData() {
+List<Article> createData() {
   Random rnd = new Random();
-  Articles articles = Articles([], category);
+  List<Article> articles = [];
   for (var i = 0; i < 15; i++) {
-    articles.articlesList.add(Article(
+    articles.add(Article(
         i,
         lorem(words: 2),
+        lorem(words: 20),
         lorem(words: 60, paragraphs: 4),
         DateTime.parse("2014-01-13T00:00:00"),
         category[rnd.nextInt(category.length)], [

@@ -10,8 +10,8 @@ import 'screens/loading/loading_screen.dart';
 import 'screens/main_screen/main_screen.dart';
 
 void main() {
-  final getIt = GetIt.instance;
-  getIt.registerLazySingleton<Articles>(() => createData());
+  // final getIt = GetIt.instance;
+  // getIt.registerLazySingleton<Articles>(() => createData());
   runApp(MyApp());
 }
 
