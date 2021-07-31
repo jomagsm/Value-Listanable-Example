@@ -2,5 +2,9 @@
     "test": "test",
     "@test": {
         "description": "Test"
+    },
+    "news": "News",
+    "@news": {
+        "description": ""
     }
 }

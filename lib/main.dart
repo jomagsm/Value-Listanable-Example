@@ -3,8 +3,11 @@ import 'package:get_it/get_it.dart';
 import 'package:value_listanable_example/data/server_api/models/article.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:value_listanable_example/theme/color_theme.dart';
 
 import 'l10n/l10n.dart';
+import 'screens/loading/loading_screen.dart';
+import 'screens/main_screen/main_screen.dart';
 
 void main() {
   final getIt = GetIt.instance;
@@ -28,9 +31,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'it Megacom 2',
       theme: ThemeData(
+        scaffoldBackgroundColor: ColorPalette.gray,
         primarySwatch: Colors.blue,
       ),
-      home: MyTestApp(),
+      home: MainScreen(),
     );
   }
 }
