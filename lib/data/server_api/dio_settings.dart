@@ -6,7 +6,7 @@ class DioSettings {
     initialSettings();
   }
 
-  static final mainServer = "http://173.249.20.184:7001";
+  static final mainServer = "http://10.244.53.185:8080/api/v1";
 
   Dio dio = Dio(BaseOptions(
     baseUrl: mainServer,
@@ -70,6 +70,7 @@ class DioSettings {
               ),
             );
           }
+          print(error.requestOptions.path);
           return handler.next(error); //continue
           // If you want to resolve the request with some custom data，
           // you can resolve a `Response` object eg: return `dio.resolve(response)`.

@@ -25,7 +25,7 @@ class _$NewsStateTearOff {
   }
 
   _DataNewsState data(
-      {required List<String> category, required List<Article> articles}) {
+      {required List<Category> category, required List<Article> articles}) {
     return _DataNewsState(
       category: category,
       articles: articles,
@@ -46,7 +46,7 @@ mixin _$NewsState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<String> category, List<Article> articles)
+    required TResult Function(List<Category> category, List<Article> articles)
         data,
     required TResult Function() loadFailure,
   }) =>
@@ -55,7 +55,7 @@ mixin _$NewsState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<String> category, List<Article> articles)? data,
+    TResult Function(List<Category> category, List<Article> articles)? data,
     TResult Function()? loadFailure,
     required TResult orElse(),
   }) =>
@@ -136,7 +136,7 @@ class _$_InitialNewsState implements _InitialNewsState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<String> category, List<Article> articles)
+    required TResult Function(List<Category> category, List<Article> articles)
         data,
     required TResult Function() loadFailure,
   }) {
@@ -148,7 +148,7 @@ class _$_InitialNewsState implements _InitialNewsState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<String> category, List<Article> articles)? data,
+    TResult Function(List<Category> category, List<Article> articles)? data,
     TResult Function()? loadFailure,
     required TResult orElse(),
   }) {
@@ -231,7 +231,7 @@ class _$_LoadingNewsState implements _LoadingNewsState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<String> category, List<Article> articles)
+    required TResult Function(List<Category> category, List<Article> articles)
         data,
     required TResult Function() loadFailure,
   }) {
@@ -243,7 +243,7 @@ class _$_LoadingNewsState implements _LoadingNewsState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<String> category, List<Article> articles)? data,
+    TResult Function(List<Category> category, List<Article> articles)? data,
     TResult Function()? loadFailure,
     required TResult orElse(),
   }) {
@@ -289,7 +289,7 @@ abstract class _$DataNewsStateCopyWith<$Res> {
   factory _$DataNewsStateCopyWith(
           _DataNewsState value, $Res Function(_DataNewsState) then) =
       __$DataNewsStateCopyWithImpl<$Res>;
-  $Res call({List<String> category, List<Article> articles});
+  $Res call({List<Category> category, List<Article> articles});
 }
 
 /// @nodoc
@@ -311,7 +311,7 @@ class __$DataNewsStateCopyWithImpl<$Res> extends _$NewsStateCopyWithImpl<$Res>
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<Category>,
       articles: articles == freezed
           ? _value.articles
           : articles // ignore: cast_nullable_to_non_nullable
@@ -326,7 +326,7 @@ class _$_DataNewsState implements _DataNewsState {
   const _$_DataNewsState({required this.category, required this.articles});
 
   @override
-  final List<String> category;
+  final List<Category> category;
   @override
   final List<Article> articles;
 
@@ -363,7 +363,7 @@ class _$_DataNewsState implements _DataNewsState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<String> category, List<Article> articles)
+    required TResult Function(List<Category> category, List<Article> articles)
         data,
     required TResult Function() loadFailure,
   }) {
@@ -375,7 +375,7 @@ class _$_DataNewsState implements _DataNewsState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<String> category, List<Article> articles)? data,
+    TResult Function(List<Category> category, List<Article> articles)? data,
     TResult Function()? loadFailure,
     required TResult orElse(),
   }) {
@@ -414,10 +414,10 @@ class _$_DataNewsState implements _DataNewsState {
 
 abstract class _DataNewsState implements NewsState {
   const factory _DataNewsState(
-      {required List<String> category,
+      {required List<Category> category,
       required List<Article> articles}) = _$_DataNewsState;
 
-  List<String> get category => throw _privateConstructorUsedError;
+  List<Category> get category => throw _privateConstructorUsedError;
   List<Article> get articles => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$DataNewsStateCopyWith<_DataNewsState> get copyWith =>
@@ -466,7 +466,7 @@ class _$_LoadFailureNewsState implements _LoadFailureNewsState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<String> category, List<Article> articles)
+    required TResult Function(List<Category> category, List<Article> articles)
         data,
     required TResult Function() loadFailure,
   }) {
@@ -478,7 +478,7 @@ class _$_LoadFailureNewsState implements _LoadFailureNewsState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<String> category, List<Article> articles)? data,
+    TResult Function(List<Category> category, List<Article> articles)? data,
     TResult Function()? loadFailure,
     required TResult orElse(),
   }) {

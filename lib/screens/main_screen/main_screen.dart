@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:value_listanable_example/data/server_api/models/models/category.dart';
+import 'package:value_listanable_example/theme/color_theme.dart';
 import 'package:value_listanable_example/theme/text_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,7 +49,7 @@ class _MainScreenBody extends StatelessWidget {
 }
 
 class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final List<String>? category;
+  final List<Category>? category;
   const _CustomAppBar({Key? key, required this.category}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -88,17 +90,24 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     child: TextButton(
                         style: TextButton.styleFrom(
-                          primary: Colors.teal,
-                          backgroundColor: Colors.white,
+                          primary: category![index].active!
+                              ? ColorPalette.white
+                              : ColorPalette.gray,
+                          backgroundColor: category![index].active!
+                              ? ColorPalette.green
+                              : ColorPalette.unselectBottom,
                           // onPrimary: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                           ),
                         ),
                         onPressed: () {},
-                        child: Text(category![index])),
+                        child: Text(category![index].name.toString())),
                   );
                 }),
+          ),
+          SizedBox(
+            height: 20,
           )
         ],
       ),
