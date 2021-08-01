@@ -22,9 +22,8 @@ class ServerApi {
   Future<List<Article>> getArticles(String locale) async {
     try {
       // http://10.244.53.185:8080/api/v1/news/allNews
-      Response<String> response = await _dio.get(
-          "/news/all-output-news-by-lang",
-          queryParameters: {"lang": locale});
+      Response<String> response =
+          await _dio.get("/news/list", queryParameters: {"lang": locale});
       return articleFromJson(response.toString());
     } catch (e) {
       throw e;
@@ -34,7 +33,7 @@ class ServerApi {
   Future<List<Category>> getCategory() async {
     try {
       Response<String> response = await _dio.get(
-        "/filters/all",
+        "/category/list",
       );
 
       return categoryFromJson(response.toString());

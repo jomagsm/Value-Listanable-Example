@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:value_listanable_example/data/repository/repository.dart';
-import 'package:value_listanable_example/data/server_api/models/article.dart';
 import 'package:value_listanable_example/data/server_api/models/models/article.dart';
 import 'package:value_listanable_example/data/server_api/models/models/category.dart';
 
@@ -32,7 +31,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
 
   Stream<NewsState> _mapSelectCategoryEvent(_SelectCategoryEvent event) async* {
     yield NewsState.loading();
-   
+
     print("articles 11: $_articles");
     yield NewsState.data(category: _category, articles: _articles);
     print("articles 22: $_articles");

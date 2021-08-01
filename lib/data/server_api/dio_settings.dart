@@ -6,7 +6,7 @@ class DioSettings {
     initialSettings();
   }
 
-  static final mainServer = "http://10.244.53.185:8080/api/v1";
+  static final mainServer = "https://news-hackathon.herokuapp.com/api";
 
   Dio dio = Dio(BaseOptions(
     baseUrl: mainServer,

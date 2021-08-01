@@ -29,7 +29,6 @@ class MainScreen extends StatelessWidget {
                     child: Text('Error'),
                   ),
               data: (_data) {
-                print("DATA ${_data.articles}");
                 return Scaffold(
                   appBar: _CustomAppBar(
                     category: _data.category,
@@ -68,7 +67,7 @@ class _MainScreenBody extends StatelessWidget {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: NetworkImage(
-                              articles![index].outputImages!.first.url!),
+                              articles![index].images!.first.url!),
                           fit: BoxFit.cover)),
                 ),
                 Container(
