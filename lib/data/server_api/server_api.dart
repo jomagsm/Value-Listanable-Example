@@ -19,12 +19,12 @@ class ServerApi {
 
   late Map<String, dynamic> _request;
 
-  Future<List<Article>> getArticles(int id) async {
+  Future<List<Article>> getArticles(String locale) async {
     try {
+      // http://10.244.53.185:8080/api/v1/news/allNews
       Response<String> response = await _dio.get(
-        "/news/news-by-lang/$id",
-      );
-
+          "/news/all-output-news-by-lang",
+          queryParameters: {"lang": locale});
       return articleFromJson(response.toString());
     } catch (e) {
       throw e;
@@ -38,6 +38,17 @@ class ServerApi {
       );
 
       return categoryFromJson(response.toString());
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<List<Article>> getFilterDate(int id) async {
+    try {
+      Response<String> response = await _dio.get("/news/news-by-langAndName",
+          queryParameters: {"lang": 'kg', 'id': id});
+
+      return articleFromJson(response.toString());
     } catch (e) {
       throw e;
     }

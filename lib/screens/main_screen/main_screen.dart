@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:value_listanable_example/data/server_api/models/models/article.dart';
 import 'package:value_listanable_example/data/server_api/models/models/category.dart';
 import 'package:value_listanable_example/theme/color_theme.dart';
 import 'package:value_listanable_example/theme/text_theme.dart';
@@ -21,36 +22,89 @@ class MainScreen extends StatelessWidget {
               orElse: () {});
         }, builder: (context, state) {
           return state.maybeMap(
-            orElse: () => Center(
-              child: Text('Error'),
-            ),
-            loading: (_) => Center(
-              child: Text('Error'),
-            ),
-            data: (_data) => Scaffold(
-              appBar: _CustomAppBar(
-                category: _data.category,
-              ),
-            ),
-          );
+              orElse: () => Center(
+                    child: Text('Error'),
+                  ),
+              loading: (_) => Center(
+                    child: Text('Error'),
+                  ),
+              data: (_data) {
+                print("DATA ${_data.articles}");
+                return Scaffold(
+                  appBar: _CustomAppBar(
+                    category: _data.category,
+                    // articles: _data.articles,
+                  ),
+                  body: BlocProvider.value(
+                    value: NewsBloc(),
+                    child: _MainScreenBody(
+                      articles: _data.articles,
+                    ),
+                  ),
+                );
+              });
         }));
   }
 }
 
 class _MainScreenBody extends StatelessWidget {
-  const _MainScreenBody({Key? key}) : super(key: key);
+  final List<Article>? articles;
+  const _MainScreenBody({Key? key, required this.articles}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: null,
-    );
+    return ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: articles!.length,
+        itemBuilder: (_, index) {
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 22),
+            child: Column(
+              children: [
+                Container(
+                  width: 320,
+                  height: 156,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              articles![index].outputImages!.first.url!),
+                          fit: BoxFit.cover)),
+                ),
+                Container(
+                  width: 320,
+                  height: 60,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        articles![index].title,
+                        style: TextThemes.cardTitle,
+                      ),
+                      new IconButton(
+                        padding: new EdgeInsets.all(0.0),
+                        color: ColorPalette.blue,
+                        icon: new Icon(Icons.chevron_right_sharp, size: 18.0),
+                        onPressed: () {},
+                      )
+                      // IconButton(icon: Icon(), onPressed: () {})
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        });
   }
 }
 
 class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  // final List<Article>? articles;
   final List<Category>? category;
-  const _CustomAppBar({Key? key, required this.category}) : super(key: key);
+  const _CustomAppBar({
+    Key? key,
+    required this.category,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -69,6 +123,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 style: TextThemes.appBarTitle,
               ),
               InkWell(
+                onTap: () {},
                 child: Container(
                   width: 24,
                   height: 24,
@@ -91,17 +146,19 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: TextButton(
                         style: TextButton.styleFrom(
                           primary: category![index].active!
-                              ? ColorPalette.white
-                              : ColorPalette.gray,
+                              ? ColorPalette.gray
+                              : ColorPalette.white,
                           backgroundColor: category![index].active!
-                              ? ColorPalette.green
-                              : ColorPalette.unselectBottom,
-                          // onPrimary: Colors.white,
+                              ? ColorPalette.unselectBottom
+                              : ColorPalette.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<NewsBloc>().add(NewsEvent.selectCategory(
+                              id: category![index].id));
+                        },
                         child: Text(category![index].name.toString())),
                   );
                 }),
@@ -116,5 +173,5 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(200);
+  Size get preferredSize => Size.fromHeight(100);
 }

@@ -8,7 +8,7 @@ String articleToJson(List<Article> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Article {
-  String? title;
+  String title;
   String? headerTitle;
   String? text;
   String? addDate;
@@ -17,7 +17,7 @@ class Article {
   List<OutputImages>? outputImages;
 
   Article({
-    this.title,
+    required this.title,
     this.headerTitle,
     this.text,
     this.addDate,
@@ -27,7 +27,7 @@ class Article {
   });
 
   factory Article.fromJson(Map<String, dynamic> json) => Article(
-        title: json['title'] as String?,
+        title: json['title'] as String,
         headerTitle: json['headerTitle'] as String?,
         text: json['text'] as String?,
         addDate: json['addDate'] as String?,

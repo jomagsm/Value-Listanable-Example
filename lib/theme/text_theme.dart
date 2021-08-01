@@ -18,6 +18,14 @@ class TextThemes {
         fontWeight: FontWeight.w700,
         color: ColorPalette.black),
   );
+
+  static var cardTitle = GoogleFonts.montserrat(
+    textStyle: TextStyle(
+        height: getTextHeight(16, 19),
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+        color: ColorPalette.blue),
+  );
 }
 
 getTextHeight(double size, double height) {

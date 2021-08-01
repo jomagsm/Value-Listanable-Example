@@ -526,6 +526,12 @@ class _$NewsEventTearOff {
   _InitialNewsEvent initial() {
     return const _InitialNewsEvent();
   }
+
+  _SelectCategoryEvent selectCategory({required int id}) {
+    return _SelectCategoryEvent(
+      id: id,
+    );
+  }
 }
 
 /// @nodoc
@@ -536,22 +542,26 @@ mixin _$NewsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
+    required TResult Function(int id) selectCategory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function(int id)? selectCategory,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialNewsEvent value) initial,
+    required TResult Function(_SelectCategoryEvent value) selectCategory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialNewsEvent value)? initial,
+    TResult Function(_SelectCategoryEvent value)? selectCategory,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -613,6 +623,7 @@ class _$_InitialNewsEvent implements _InitialNewsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
+    required TResult Function(int id) selectCategory,
   }) {
     return initial();
   }
@@ -621,6 +632,7 @@ class _$_InitialNewsEvent implements _InitialNewsEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function(int id)? selectCategory,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -633,6 +645,7 @@ class _$_InitialNewsEvent implements _InitialNewsEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialNewsEvent value) initial,
+    required TResult Function(_SelectCategoryEvent value) selectCategory,
   }) {
     return initial(this);
   }
@@ -641,6 +654,7 @@ class _$_InitialNewsEvent implements _InitialNewsEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialNewsEvent value)? initial,
+    TResult Function(_SelectCategoryEvent value)? selectCategory,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -652,4 +666,122 @@ class _$_InitialNewsEvent implements _InitialNewsEvent {
 
 abstract class _InitialNewsEvent implements NewsEvent {
   const factory _InitialNewsEvent() = _$_InitialNewsEvent;
+}
+
+/// @nodoc
+abstract class _$SelectCategoryEventCopyWith<$Res> {
+  factory _$SelectCategoryEventCopyWith(_SelectCategoryEvent value,
+          $Res Function(_SelectCategoryEvent) then) =
+      __$SelectCategoryEventCopyWithImpl<$Res>;
+  $Res call({int id});
+}
+
+/// @nodoc
+class __$SelectCategoryEventCopyWithImpl<$Res>
+    extends _$NewsEventCopyWithImpl<$Res>
+    implements _$SelectCategoryEventCopyWith<$Res> {
+  __$SelectCategoryEventCopyWithImpl(
+      _SelectCategoryEvent _value, $Res Function(_SelectCategoryEvent) _then)
+      : super(_value, (v) => _then(v as _SelectCategoryEvent));
+
+  @override
+  _SelectCategoryEvent get _value => super._value as _SelectCategoryEvent;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+  }) {
+    return _then(_SelectCategoryEvent(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SelectCategoryEvent implements _SelectCategoryEvent {
+  const _$_SelectCategoryEvent({required this.id});
+
+  @override
+  final int id;
+
+  @override
+  String toString() {
+    return 'NewsEvent.selectCategory(id: $id)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _SelectCategoryEvent &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(id);
+
+  @JsonKey(ignore: true)
+  @override
+  _$SelectCategoryEventCopyWith<_SelectCategoryEvent> get copyWith =>
+      __$SelectCategoryEventCopyWithImpl<_SelectCategoryEvent>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(int id) selectCategory,
+  }) {
+    return selectCategory(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(int id)? selectCategory,
+    required TResult orElse(),
+  }) {
+    if (selectCategory != null) {
+      return selectCategory(id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitialNewsEvent value) initial,
+    required TResult Function(_SelectCategoryEvent value) selectCategory,
+  }) {
+    return selectCategory(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitialNewsEvent value)? initial,
+    TResult Function(_SelectCategoryEvent value)? selectCategory,
+    required TResult orElse(),
+  }) {
+    if (selectCategory != null) {
+      return selectCategory(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SelectCategoryEvent implements NewsEvent {
+  const factory _SelectCategoryEvent({required int id}) =
+      _$_SelectCategoryEvent;
+
+  int get id => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$SelectCategoryEventCopyWith<_SelectCategoryEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }

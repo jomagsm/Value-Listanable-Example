@@ -19,16 +19,22 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   Stream<NewsState> mapEventToState(NewsEvent event) async* {
     yield* event.map(
       initial: _mapInitialNewsScreenEvent,
+      selectCategory: _mapSelectCategoryEvent,
     );
   }
 
   Stream<NewsState> _mapInitialNewsScreenEvent(_InitialNewsEvent event) async* {
     yield NewsState.loading();
-    _articles = await _repository.getArticles(1);
+    _articles = await _repository.getArticles('kg');
     _category = await _repository.getCategory();
-    print(_articles);
-    // _articles = createData();
-    // yield NewsState.category(category: _category);
     yield NewsState.data(category: _category, articles: _articles);
+  }
+
+  Stream<NewsState> _mapSelectCategoryEvent(_SelectCategoryEvent event) async* {
+    yield NewsState.loading();
+   
+    print("articles 11: $_articles");
+    yield NewsState.data(category: _category, articles: _articles);
+    print("articles 22: $_articles");
   }
 }
