@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:value_listanable_example/data/server_api/models/models/article.dart';
 import 'package:value_listanable_example/data/server_api/models/models/category.dart';
@@ -25,6 +27,16 @@ class ServerApi {
       Response<String> response =
           await _dio.get("/news/list", queryParameters: {"lang": locale});
       return articleFromJson(response.toString());
+    } catch (e) {
+      throw e;
+    }
+  }
+
+   Future<Article> getArticleById(int id) async {
+    try {
+      Response<String> response =
+          await _dio.get("/news/$id");
+      return Article.fromJson(json.decode(response.toString()));
     } catch (e) {
       throw e;
     }

@@ -49,15 +49,14 @@ String articleToJson(List<Article> data) =>
 //       };
 // }
 
-
 class Article {
   int id;
   List<Images>? images;
   String title;
   String? headerTitle;
   String? text;
-  String? addDate;
-  String? editDate;
+  DateTime addDate;
+  DateTime? editDate;
   bool? active;
   int categories;
   int languages;
@@ -68,7 +67,7 @@ class Article {
     required this.title,
     this.headerTitle,
     this.text,
-    this.addDate,
+    required this.addDate,
     this.editDate,
     this.active,
     required this.categories,
@@ -83,13 +82,14 @@ class Article {
         title: json['title'] as String,
         headerTitle: json['header_title'] as String?,
         text: json['text'] as String?,
-        addDate: json['add_date'] as String?,
-        editDate: json['edit_date'] as String?,
+        addDate: DateTime.parse(json['add_date']),
+        editDate: json['edit_date'] == null
+            ? null
+            : DateTime.parse(json['edit_date']),
         active: json['active'] as bool?,
         categories: json['categories'] as int,
         languages: json['languages'] as int,
       );
-
   Map<String, dynamic> toJson() => {
         'id': id,
         'images': images?.map((e) => e.toJson()).toList(),

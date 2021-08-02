@@ -19,13 +19,34 @@ class TextThemes {
         color: ColorPalette.black),
   );
 
-  static var cardTitle = GoogleFonts.montserrat(
-    textStyle: TextStyle(
-        height: getTextHeight(16, 19),
-        fontSize: 20,
-        fontWeight: FontWeight.w500,
-        color: ColorPalette.blue),
-  );
+  static var cardTitle = TextStyle(
+      fontFamily: 'Helvetica',
+      height: getTextHeight(20, 19.2),
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: ColorPalette.blue);
+
+  static var headerTitle = TextStyle(
+      fontFamily: 'Helvetica',
+      height: getTextHeight(16, 19.2),
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: ColorPalette.blueHeader);
+
+  static var contentText = TextStyle(
+      fontFamily: 'Helvetica',
+      height: getTextHeight(14, 17.5),
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      color: ColorPalette.grayText);
+
+
+  static var date = TextStyle(
+      fontFamily: 'Museo Sans Cyrl',
+      height: getTextHeight(14, 17.5),
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      color: ColorPalette.lightGray);
 }
 
 getTextHeight(double size, double height) {

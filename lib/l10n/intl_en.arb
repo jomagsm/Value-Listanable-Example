@@ -6,5 +6,10 @@
     "news": "News",
     "@news": {
         "description": ""
+    },
+
+    "data": "Data",
+    "@data": {
+        "description": "Data"
     }
 }

@@ -23,6 +23,15 @@ class Repository {
     }
   }
 
+  Future<Article> getArticleById(int id) async {
+    try {
+      final response = await _serviceApi.getArticleById(id);
+      return response;
+    } catch (e) {
+      throw (e);
+    }
+  }
+
   Future<List<Article>> getFilterDate(int id) async {
     try {
       final response = await _serviceApi.getFilterDate(id);

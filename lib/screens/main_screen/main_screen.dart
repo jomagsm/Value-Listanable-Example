@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:value_listanable_example/data/server_api/models/models/article.dart';
 import 'package:value_listanable_example/data/server_api/models/models/category.dart';
+import 'package:value_listanable_example/screens/article_screen/article_screen.dart';
 import 'package:value_listanable_example/theme/color_theme.dart';
 import 'package:value_listanable_example/theme/text_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,8 +67,8 @@ class _MainScreenBody extends StatelessWidget {
                   height: 156,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: NetworkImage(
-                              articles![index].images!.first.url!),
+                          image:
+                              NetworkImage(articles![index].images!.first.url!),
                           fit: BoxFit.cover)),
                 ),
                 Container(
@@ -76,15 +77,27 @@ class _MainScreenBody extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        articles![index].title,
-                        style: TextThemes.cardTitle,
+                      Expanded(
+                        child: Text(
+                          articles![index].title,
+                          overflow: TextOverflow.fade,
+                          softWrap: false,
+                          style: TextThemes.cardTitle,
+                        ),
                       ),
                       new IconButton(
                         padding: new EdgeInsets.all(0.0),
                         color: ColorPalette.blue,
                         icon: new Icon(Icons.chevron_right_sharp, size: 18.0),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ArticleDetail(
+                                      idArticle: articles![index].id,
+                                    )),
+                          );
+                        },
                       )
                       // IconButton(icon: Icon(), onPressed: () {})
                     ],
