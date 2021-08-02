@@ -25,15 +25,22 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   Stream<NewsState> _mapInitialNewsScreenEvent(_InitialNewsEvent event) async* {
     yield NewsState.loading();
     _articles = await _repository.getArticles('kg');
-    _category = await _repository.getCategory();
+    List<Category> _allCategory = await _repository.getAllCategory('kg');
+    _category = getCategoryByLang('kg', _allCategory);
     yield NewsState.data(category: _category, articles: _articles);
   }
 
   Stream<NewsState> _mapSelectCategoryEvent(_SelectCategoryEvent event) async* {
     yield NewsState.loading();
-
-    print("articles 11: $_articles");
+    _articles =[];
+    for (var i in _category) {
+      if (i.id == event.id) {
+        i.active = !i.active!;
+      }
+      if(!i.active!){
+          _articles += await _repository.getFilterDate(i.id);
+        }
+    }
     yield NewsState.data(category: _category, articles: _articles);
-    print("articles 22: $_articles");
   }
 }

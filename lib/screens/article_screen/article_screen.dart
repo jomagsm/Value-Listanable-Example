@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:value_listanable_example/components/circular_progress.dart';
 import 'package:value_listanable_example/data/server_api/models/models/output_images.dart';
 import 'package:value_listanable_example/screens/article_screen/article_bloc/article_bloc.dart';
 import 'package:value_listanable_example/theme/color_theme.dart';
@@ -55,9 +56,7 @@ class _Body extends StatelessWidget {
               orElse: () => Center(
                     child: Text('Error'),
                   ),
-              loading: (_) => Center(
-                    child: Text('Error'),
-                  ),
+              loading: (_) => customCircularProgress(),
               data: (_data) {
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 16),
@@ -79,8 +78,13 @@ class _Body extends StatelessWidget {
                           child: _ImageSlider(
                             images: _data.article.images!,
                           )),
-                          const SizedBox(height: 13,),
-                      Text(_data.article.text!, style: TextThemes.contentText,),
+                      const SizedBox(
+                        height: 13,
+                      ),
+                      Text(
+                        _data.article.text!,
+                        style: TextThemes.contentText,
+                      ),
                     ],
                   ),
                 );

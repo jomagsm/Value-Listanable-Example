@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:value_listanable_example/components/circular_progress.dart';
 import 'package:value_listanable_example/data/server_api/models/models/article.dart';
 import 'package:value_listanable_example/data/server_api/models/models/category.dart';
 import 'package:value_listanable_example/screens/article_screen/article_screen.dart';
@@ -26,14 +27,11 @@ class MainScreen extends StatelessWidget {
               orElse: () => Center(
                     child: Text('Error'),
                   ),
-              loading: (_) => Center(
-                    child: Text('Error'),
-                  ),
+              loading: (_) => customCircularProgress(),
               data: (_data) {
                 return Scaffold(
                   appBar: _CustomAppBar(
                     category: _data.category,
-                    // articles: _data.articles,
                   ),
                   body: BlocProvider.value(
                     value: NewsBloc(),
@@ -60,50 +58,59 @@ class _MainScreenBody extends StatelessWidget {
         itemBuilder: (_, index) {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 22),
-            child: Column(
-              children: [
-                Container(
-                  width: 320,
-                  height: 156,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image:
-                              NetworkImage(articles![index].images!.first.url!),
-                          fit: BoxFit.cover)),
-                ),
-                Container(
-                  width: 320,
-                  height: 60,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          articles![index].title,
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                          style: TextThemes.cardTitle,
-                        ),
-                      ),
-                      new IconButton(
-                        padding: new EdgeInsets.all(0.0),
-                        color: ColorPalette.blue,
-                        icon: new Icon(Icons.chevron_right_sharp, size: 18.0),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ArticleDetail(
-                                      idArticle: articles![index].id,
-                                    )),
-                          );
-                        },
-                      )
-                      // IconButton(icon: Icon(), onPressed: () {})
-                    ],
+            child: InkWell(
+              onTap: (){Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ArticleDetail(
+                                        idArticle: articles![index].id,
+                                      )),
+                            );},
+              child: Column(
+                children: [
+                  Container(
+                    width: 320,
+                    height: 156,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image:
+                                NetworkImage(articles![index].images!.first.url!),
+                            fit: BoxFit.cover)),
                   ),
-                )
-              ],
+                  Container(
+                    width: 320,
+                    height: 60,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            articles![index].title,
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                            style: TextThemes.cardTitle,
+                          ),
+                        ),
+                        new IconButton(
+                          padding: new EdgeInsets.all(0.0),
+                          color: ColorPalette.blue,
+                          icon: new Icon(Icons.chevron_right_sharp, size: 25.0),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ArticleDetail(
+                                        idArticle: articles![index].id,
+                                      )),
+                            );
+                          },
+                        )
+                        // IconButton(icon: Icon(), onPressed: () {})
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         });
@@ -111,7 +118,6 @@ class _MainScreenBody extends StatelessWidget {
 }
 
 class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  // final List<Article>? articles;
   final List<Category>? category;
   const _CustomAppBar({
     Key? key,
@@ -119,68 +125,63 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      title: Column(
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.all(8),
+        child: Column(
             children: [
-              Text(
-                AppLocalizations.of(context)!.news,
-                style: TextThemes.appBarTitle,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.news,
+                    style: TextThemes.appBarTitle,
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/img/lang.png'))),
+                    ),
+                  )
+                ],
               ),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/img/lang.png'))),
-                ),
-              )
+              Container(
+                margin: EdgeInsets.only(top:20),
+                height: 30,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemCount: category!.length,
+                    itemBuilder: (_, index) {
+                      return Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        child: TextButton(
+                            style: TextButton.styleFrom(
+                              primary: category![index].active!
+                                  ? ColorPalette.gray
+                                  : ColorPalette.white,
+                              backgroundColor: category![index].active!
+                                  ? ColorPalette.unselectBottom
+                                  : ColorPalette.green,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              context.read<NewsBloc>().add(NewsEvent.selectCategory(
+                                  id: category![index].id));
+                            },
+                            child: Text(category![index].name.toString())),
+                      );
+                    }),
+              ),
             ],
           ),
-          Container(
-            height: 30,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: category!.length,
-                itemBuilder: (_, index) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    child: TextButton(
-                        style: TextButton.styleFrom(
-                          primary: category![index].active!
-                              ? ColorPalette.gray
-                              : ColorPalette.white,
-                          backgroundColor: category![index].active!
-                              ? ColorPalette.unselectBottom
-                              : ColorPalette.green,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                          ),
-                        ),
-                        onPressed: () {
-                          context.read<NewsBloc>().add(NewsEvent.selectCategory(
-                              id: category![index].id));
-                        },
-                        child: Text(category![index].name.toString())),
-                  );
-                }),
-          ),
-          SizedBox(
-            height: 20,
-          )
-        ],
       ),
-      centerTitle: false,
     );
   }
 

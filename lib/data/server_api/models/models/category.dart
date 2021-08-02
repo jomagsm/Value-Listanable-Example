@@ -9,22 +9,39 @@ String categoryToJson(List<Category> data) =>
 class Category {
   int id;
   String? name;
-  String? lang;
+  int? languages;
   bool? active;
 
-  Category({required this.id, this.name, this.lang, this.active});
+  Category({required this.id, this.name, this.languages, this.active});
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
         id: json['id'] as int,
         name: json['name'] as String?,
-        lang: json['lang'] as String?,
+        languages: json['languages'] as int?,
         active: json['active'] as bool?,
       );
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'lang': lang,
+        'lang': languages,
         'active': active,
       };
+}
+
+List<Category> getCategoryByLang(String locale, List<Category> categoryList){
+  List<Category> sortList= [];
+  int lang = 0;
+  if(locale == 'kg'){
+    lang = 1;
+  }
+  else{
+   lang = 2;
+  }
+  for(var i in categoryList){
+    if (i.languages == lang){
+      sortList.add(i);
+    }
+  }
+  return sortList;
 }

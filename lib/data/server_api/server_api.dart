@@ -42,12 +42,11 @@ class ServerApi {
     }
   }
 
-  Future<List<Category>> getCategory() async {
+  Future<List<Category>> getAllCategory(String locale) async {
     try {
       Response<String> response = await _dio.get(
         "/category/list",
-      );
-
+         queryParameters: {"lang": 'kg'});
       return categoryFromJson(response.toString());
     } catch (e) {
       throw e;
@@ -56,8 +55,8 @@ class ServerApi {
 
   Future<List<Article>> getFilterDate(int id) async {
     try {
-      Response<String> response = await _dio.get("/news/news-by-langAndName",
-          queryParameters: {"lang": 'kg', 'id': id});
+      Response<String> response = await _dio.get("/news/list?lang=kg",
+          queryParameters: {'category': id});
 
       return articleFromJson(response.toString());
     } catch (e) {
@@ -65,3 +64,6 @@ class ServerApi {
     }
   }
 }
+
+
+// https://news-hackathon.herokuapp.com/api/news/list?lang=kg&category=1

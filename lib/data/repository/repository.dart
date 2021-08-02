@@ -14,9 +14,9 @@ class Repository {
     }
   }
 
-  Future<List<Category>> getCategory() async {
+  Future<List<Category>> getAllCategory(String locale) async {
     try {
-      final response = await _serviceApi.getCategory();
+      final response = await _serviceApi.getAllCategory(locale);
       return response;
     } catch (e) {
       throw (e);
