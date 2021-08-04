@@ -52,14 +52,14 @@ String articleToJson(List<Article> data) =>
 class Article {
   int id;
   List<Images>? images;
-  String title;
+  String? title;
   String? headerTitle;
   String? text;
-  DateTime addDate;
+  DateTime? addDate;
   DateTime? editDate;
   bool? active;
-  int categories;
-  int languages;
+  int? categories;
+  int? languages;
 
   Article({
     required this.id,
@@ -67,11 +67,11 @@ class Article {
     required this.title,
     this.headerTitle,
     this.text,
-    required this.addDate,
+    this.addDate,
     this.editDate,
     this.active,
-    required this.categories,
-    required this.languages,
+    this.categories,
+    this.languages,
   });
 
   factory Article.fromJson(Map<String, dynamic> json) => Article(
@@ -79,16 +79,17 @@ class Article {
         images: (json['images'] as List<dynamic>?)
             ?.map((e) => Images.fromJson(e as Map<String, dynamic>))
             .toList(),
-        title: json['title'] as String,
+        title: json['title'] as String?,
         headerTitle: json['header_title'] as String?,
         text: json['text'] as String?,
-        addDate: DateTime.parse(json['add_date']),
+        addDate:json['add_date'] == null
+            ? null : DateTime.parse(json['add_date']),
         editDate: json['edit_date'] == null
             ? null
             : DateTime.parse(json['edit_date']),
         active: json['active'] as bool?,
-        categories: json['categories'] as int,
-        languages: json['languages'] as int,
+        categories: json['categories'] as int?,
+        languages: json['languages'] as int?,
       );
   Map<String, dynamic> toJson() => {
         'id': id,

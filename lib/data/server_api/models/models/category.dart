@@ -10,15 +10,14 @@ class Category {
   int id;
   String? name;
   int? languages;
-  bool? active;
+  bool active = true;
 
-  Category({required this.id, this.name, this.languages, this.active});
+  Category({required this.id, this.name, this.languages});
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
         id: json['id'] as int,
         name: json['name'] as String?,
         languages: json['languages'] as int?,
-        active: json['active'] as bool?,
       );
 
   Map<String, dynamic> toJson() => {

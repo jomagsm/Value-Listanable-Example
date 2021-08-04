@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:value_listanable_example/data/server_api/models/article.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:value_listanable_example/theme/color_theme.dart';
 
 import 'l10n/l10n.dart';
+import 'provider/locale_provider.dart';
 import 'screens/loading/loading_screen.dart';
 import 'screens/main_screen/main_screen.dart';
 
-void main() {
+void main() async{
+    WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   // final getIt = GetIt.instance;
   // getIt.registerLazySingleton<Articles>(() => createData());
   runApp(MyApp());
@@ -18,25 +25,48 @@ void main() {
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: L10n.all,
-      locale: Locale('ru'),
-      debugShowCheckedModeBanner: false,
-      title: 'it Megacom 2',
-      theme: ThemeData(
-        scaffoldBackgroundColor: ColorPalette.gray,
-        primarySwatch: Colors.blue,
-      ),
-      home: MainScreen(),
-    );
-  }
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+        create: (context) => LocaleProvider(),
+        builder: (context, child) {
+          final provider = Provider.of<LocaleProvider>(context);
+
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              scaffoldBackgroundColor: ColorPalette.gray,
+              primarySwatch: Colors.blue,
+            ),
+            locale: provider.locale,
+            supportedLocales: L10n.all,
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            home: MainScreen(),
+          );
+        },
+      );
+  //  {
+  //   return MaterialApp(
+  //     localizationsDelegates: [
+  //       AppLocalizations.delegate,
+  //       GlobalMaterialLocalizations.delegate,
+  //       GlobalCupertinoLocalizations.delegate,
+  //       GlobalWidgetsLocalizations.delegate,
+  //     ],
+  //     supportedLocales: L10n.all,
+  //     locale: provide,
+  //     debugShowCheckedModeBanner: false,
+  //     title: 'it Megacom 2',
+  // theme: ThemeData(
+  //   scaffoldBackgroundColor: ColorPalette.gray,
+  //   primarySwatch: Colors.blue,
+  // ),
+  //     home: MainScreen(),
+  //   );
+  // }
 }
 
 class MyTestApp extends StatelessWidget {

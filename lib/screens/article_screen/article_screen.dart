@@ -66,7 +66,7 @@ class _Body extends StatelessWidget {
                       Text(_data.article.headerTitle.toString(),
                           style: TextThemes.headerTitle),
                       Text(
-                        '${AppLocalizations.of(context)!.data} ${DateFormat('dd.MM.yyyy').format(_data.article.addDate)}',
+                        '${AppLocalizations.of(context)!.data} ${DateFormat('dd.MM.yyyy').format(_data.article.addDate!)}',
                         style: TextThemes.date,
                       ),
                       const SizedBox(
