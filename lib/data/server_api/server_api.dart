@@ -19,7 +19,7 @@ class ServerApi {
   late DioSettings _dioSettings;
   late Dio _dio;
 
-  late Map<String, dynamic> _request;
+  // late Map<String, dynamic> _request;
 
   Future<List<Article>> getArticles(String locale) async {
     try {

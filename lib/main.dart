@@ -7,11 +7,11 @@ import 'package:value_listanable_example/theme/color_theme.dart';
 
 import 'l10n/l10n.dart';
 import 'provider/locale_provider.dart';
-import 'screens/loading/loading_screen.dart';
 import 'screens/main_screen/main_screen.dart';
+import 'screens/splash_screen/splash_screen.dart';
 
-void main() async{
-    WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -23,7 +23,9 @@ void main() async{
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  final routes = <String, WidgetBuilder>{
+    '/Home': (BuildContext context) => MainScreen()
+  };
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
         create: (context) => LocaleProvider(),
@@ -44,7 +46,8 @@ class MyApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
             ],
-            home: MainScreen(),
+            home: SplashScreen(nextRoute: '/Home'),
+            routes: routes,
           );
         },
       );
