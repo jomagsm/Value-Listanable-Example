@@ -28,6 +28,22 @@ class MainScreen extends StatelessWidget {
               orElse: () {});
         }, builder: (context, state) {
           return state.maybeMap(
+              loadFailure: (error) => Scaffold(
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(),
+                        Text(error.toString()),
+                        ElevatedButton(
+                            onPressed: () {
+                              NewsBloc()
+                                ..add(NewsEvent.initial(
+                                    locale: provider.getLocaleCode()));
+                            },
+                            child: Text('Повторить'))
+                      ],
+                    ),
+                  ),
               orElse: () => Center(
                     child: Text('Error'),
                   ),
