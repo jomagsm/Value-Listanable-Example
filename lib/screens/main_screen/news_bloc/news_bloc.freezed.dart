@@ -523,8 +523,10 @@ abstract class _LoadFailureNewsState implements NewsState {
 class _$NewsEventTearOff {
   const _$NewsEventTearOff();
 
-  _InitialNewsEvent initial() {
-    return const _InitialNewsEvent();
+  _InitialNewsEvent initial({required String locale}) {
+    return _InitialNewsEvent(
+      locale: locale,
+    );
   }
 
   _SelectCategoryEvent selectCategory({required int id}) {
@@ -541,13 +543,13 @@ const $NewsEvent = _$NewsEventTearOff();
 mixin _$NewsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(String locale) initial,
     required TResult Function(int id) selectCategory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(String locale)? initial,
     TResult Function(int id)? selectCategory,
     required TResult orElse(),
   }) =>
@@ -587,6 +589,7 @@ abstract class _$InitialNewsEventCopyWith<$Res> {
   factory _$InitialNewsEventCopyWith(
           _InitialNewsEvent value, $Res Function(_InitialNewsEvent) then) =
       __$InitialNewsEventCopyWithImpl<$Res>;
+  $Res call({String locale});
 }
 
 /// @nodoc
@@ -599,44 +602,68 @@ class __$InitialNewsEventCopyWithImpl<$Res>
 
   @override
   _InitialNewsEvent get _value => super._value as _InitialNewsEvent;
+
+  @override
+  $Res call({
+    Object? locale = freezed,
+  }) {
+    return _then(_InitialNewsEvent(
+      locale: locale == freezed
+          ? _value.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_InitialNewsEvent implements _InitialNewsEvent {
-  const _$_InitialNewsEvent();
+  const _$_InitialNewsEvent({required this.locale});
+
+  @override
+  final String locale;
 
   @override
   String toString() {
-    return 'NewsEvent.initial()';
+    return 'NewsEvent.initial(locale: $locale)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _InitialNewsEvent);
+    return identical(this, other) ||
+        (other is _InitialNewsEvent &&
+            (identical(other.locale, locale) ||
+                const DeepCollectionEquality().equals(other.locale, locale)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(locale);
+
+  @JsonKey(ignore: true)
+  @override
+  _$InitialNewsEventCopyWith<_InitialNewsEvent> get copyWith =>
+      __$InitialNewsEventCopyWithImpl<_InitialNewsEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(String locale) initial,
     required TResult Function(int id) selectCategory,
   }) {
-    return initial();
+    return initial(locale);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(String locale)? initial,
     TResult Function(int id)? selectCategory,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(locale);
     }
     return orElse();
   }
@@ -665,7 +692,13 @@ class _$_InitialNewsEvent implements _InitialNewsEvent {
 }
 
 abstract class _InitialNewsEvent implements NewsEvent {
-  const factory _InitialNewsEvent() = _$_InitialNewsEvent;
+  const factory _InitialNewsEvent({required String locale}) =
+      _$_InitialNewsEvent;
+
+  String get locale => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$InitialNewsEventCopyWith<_InitialNewsEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -734,7 +767,7 @@ class _$_SelectCategoryEvent implements _SelectCategoryEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(String locale) initial,
     required TResult Function(int id) selectCategory,
   }) {
     return selectCategory(id);
@@ -743,7 +776,7 @@ class _$_SelectCategoryEvent implements _SelectCategoryEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(String locale)? initial,
     TResult Function(int id)? selectCategory,
     required TResult orElse(),
   }) {

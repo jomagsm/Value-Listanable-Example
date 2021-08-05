@@ -69,10 +69,10 @@ flutter:
   fonts:
     - family: Helvetica
       fonts:
-          - asset:  assets\fonts\KG_Helvetica Bold_0.ttf
+          - asset:  assets/fonts/KG_Helvetica Bold_0.ttf
     - family:  Museo Sans Cyrl
       fonts:
-          - asset: assets\fonts\Museosanscyrl500.ttf
+          - asset: assets/fonts/Museosanscyrl500.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

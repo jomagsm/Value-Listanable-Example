@@ -17,8 +17,10 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<LocaleProvider>(context);
     return BlocProvider<NewsBloc>(
-        create: (BuildContext context) => NewsBloc()..add(NewsEvent.initial()),
+        create: (BuildContext context) => NewsBloc()
+          ..add(NewsEvent.initial(locale: provider.getLocaleCode())),
         child: BlocConsumer<NewsBloc, NewsState>(listener: (context, state) {
           state.maybeWhen(
               // error: (_error) => ScaffoldMessenger.of(context)
@@ -143,35 +145,38 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   style: TextThemes.appBarTitle,
                 ),
                 PopupMenuButton(
-                  onSelected:(String value) {
-                    provider.setLocale(Locale('ru'));},
-                  child: Container(
-                    width: 24,
-                    height: 24,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/img/lang.png')))),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    child: Text("KG"),
-                    value: 'KG',
-                  ),
-                  PopupMenuItem(
-                    child: Text("RU"),
-                    value: 'RU',
-                  )
-                ]
-            )
+                    onSelected: (String value) {
+                      provider.setLocale(provider.getLocale(value));
+                      context.read<NewsBloc>()
+                        ..add(NewsEvent.initial(
+                            locale: provider.getLocaleCode()));
+                    },
+                    child: Container(
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/img/lang.png')))),
+                    itemBuilder: (context) => [
+                          PopupMenuItem(
+                            child: Text("KG"),
+                            value: 'KG',
+                          ),
+                          PopupMenuItem(
+                            child: Text("RU"),
+                            value: 'RU',
+                          )
+                        ])
                 // _LangPopUpMenu(),
                 // _LanguagePickerWidget(),
                 // InkWell(
                 //   onTap: () {_LangPopUpMenu();},
-                  // child: Container(
-                  //   width: 24,
-                  //   height: 24,
-                  //   decoration: BoxDecoration(
-                  //       image: DecorationImage(
-                  //           image: AssetImage('assets/img/lang.png'))),
+                // child: Container(
+                //   width: 24,
+                //   height: 24,
+                //   decoration: BoxDecoration(
+                //       image: DecorationImage(
+                //           image: AssetImage('assets/img/lang.png'))),
                 //   ),
                 // )
               ],
@@ -217,77 +222,38 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(120);
 }
 
-class _LanguagePickerWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<LocaleProvider>(context);
-    final List<String> _dropDownValue = ['KG', 'RU'];
-    // final locale = provider.locale ?? Locale('en');
+// class _LanguagePickerWidget extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     final provider = Provider.of<LocaleProvider>(context);
+//     final List<String> _dropDownValue = ['KG', 'RU'];
+//     // final locale = provider.locale ?? Locale('en');
 
-    return DropdownButtonHideUnderline(
-      child: DropdownButton(
-        value: _dropDownValue.first,
-        icon: Container(width: 12),
-        items: _dropDownValue.map(
-          (locale) {
-            return DropdownMenuItem(
-              child: Center(
-                child: Text(
-                  locale,
-                  style: TextStyle(fontSize: 32),
-                ),
-              ),
-              value: locale,
-              onTap: () {
-                final provider =
-                    Provider.of<LocaleProvider>(context, listen: false);
+//     return DropdownButtonHideUnderline(
+//       child: DropdownButton(
+//         value: _dropDownValue.first,
+//         icon: Container(width: 12),
+//         items: _dropDownValue.map(
+//           (locale) {
+//             return DropdownMenuItem(
+//               child: Center(
+//                 child: Text(
+//                   locale,
+//                   style: TextStyle(fontSize: 32),
+//                 ),
+//               ),
+//               value: locale,
+//               onTap: () {
+//                 final provider =
+//                     Provider.of<LocaleProvider>(context, listen: false);
 
-                // provider.setLocale(locale);
-              },
-            );
-          },
-        ).toList(),
-        onChanged: (_) {},
-      ),
-    );
-  }
-}
-
-class _LangPopUpMenu extends StatelessWidget {
-  const _LangPopUpMenu({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton<String>(
-        icon: Icon(Icons.filter_list),
-        onSelected: (String result) {
-          switch (result) {
-            case 'filter1':
-              print('filter 1 clicked');
-              break;
-            case 'filter2':
-              print('filter 2 clicked');
-              break;
-            case 'clearFilters':
-              print('Clear filters');
-              break;
-            default:
-          }
-        },
-        itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-          const PopupMenuItem<String>(
-            value: 'filter1',
-            child: Text('Filter 1'),
-          ),
-          const PopupMenuItem<String>(
-            value: 'filter2',
-            child: Text('Filter 2'),
-          ),
-          const PopupMenuItem<String>(
-            value: 'clearFilters',
-            child: Text('Clear filters'),
-          ),
-        ],
-      );
-  }
-}
+//                 // provider.setLocale(locale);
+//               },
+//             );
+//           },
+//         ).toList(),
+//         onChanged: (_) {},
+//       ),
+//     );
+//   }
+// }
