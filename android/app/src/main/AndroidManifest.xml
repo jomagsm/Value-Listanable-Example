@@ -2,7 +2,7 @@
     package="com.example.value_listanable_example">
    <application
         android:usesCleartextTraffic="true"
-        android:label="value_listanable_example"
+        android:label="Новости Хакатон 2"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
