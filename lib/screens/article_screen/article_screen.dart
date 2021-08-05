@@ -53,6 +53,22 @@ class _Body extends StatelessWidget {
               orElse: () {});
         }, builder: (context, state) {
           return state.maybeMap(
+              loadFailure: (error) => Scaffold(
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(),
+                        Text(error.toString()),
+                        ElevatedButton(
+                            onPressed: () {
+                              ArticleBloc()
+                                ..add(
+                                    ArticleEvent.initial(idArticle: idArticle));
+                            },
+                            child: Text('Повторить'))
+                      ],
+                    ),
+                  ),
               orElse: () => Center(
                     child: Text('Error'),
                   ),

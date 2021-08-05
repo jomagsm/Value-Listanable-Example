@@ -7,9 +7,9 @@ part 'article_state.dart';
 part 'article_event.dart';
 part 'article_bloc.freezed.dart';
 
-class ArticleBloc extends Bloc<ArticleEvent,ArticleState>{
+class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   late Article _article;
-  final _repository = Repository(); 
+  final _repository = Repository();
   ArticleBloc() : super(ArticleState.initial());
 
   @override
@@ -19,9 +19,14 @@ class ArticleBloc extends Bloc<ArticleEvent,ArticleState>{
     );
   }
 
-  Stream<ArticleState> _mapInitialArticleEvent(_InitialArticleEvent event) async*{
+  Stream<ArticleState> _mapInitialArticleEvent(
+      _InitialArticleEvent event) async* {
     yield ArticleState.loading();
-    _article = await _repository.getArticleById(event.idArticle);
-    yield ArticleState.data(article: _article);
+    try {
+      _article = await _repository.getArticleById(event.idArticle);
+      yield ArticleState.data(article: _article);
+    } catch (e) {
+      yield ArticleState.loadFailure(message: e.toString());
+    }
   }
 }

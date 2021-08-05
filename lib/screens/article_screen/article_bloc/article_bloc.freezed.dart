@@ -30,8 +30,10 @@ class _$ArticleStateTearOff {
     );
   }
 
-  _LoadFailureArticleState loadFailure() {
-    return const _LoadFailureArticleState();
+  _LoadFailureArticleState loadFailure({required String message}) {
+    return _LoadFailureArticleState(
+      message: message,
+    );
   }
 }
 
@@ -45,7 +47,7 @@ mixin _$ArticleState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Article article) data,
-    required TResult Function() loadFailure,
+    required TResult Function(String message) loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -53,7 +55,7 @@ mixin _$ArticleState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Article article)? data,
-    TResult Function()? loadFailure,
+    TResult Function(String message)? loadFailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -135,7 +137,7 @@ class _$_InitialArticleState implements _InitialArticleState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Article article) data,
-    required TResult Function() loadFailure,
+    required TResult Function(String message) loadFailure,
   }) {
     return initial();
   }
@@ -146,7 +148,7 @@ class _$_InitialArticleState implements _InitialArticleState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Article article)? data,
-    TResult Function()? loadFailure,
+    TResult Function(String message)? loadFailure,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -229,7 +231,7 @@ class _$_LoadingArticleState implements _LoadingArticleState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Article article) data,
-    required TResult Function() loadFailure,
+    required TResult Function(String message) loadFailure,
   }) {
     return loading();
   }
@@ -240,7 +242,7 @@ class _$_LoadingArticleState implements _LoadingArticleState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Article article)? data,
-    TResult Function()? loadFailure,
+    TResult Function(String message)? loadFailure,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -348,7 +350,7 @@ class _$_DataArticleState implements _DataArticleState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Article article) data,
-    required TResult Function() loadFailure,
+    required TResult Function(String message) loadFailure,
   }) {
     return data(article);
   }
@@ -359,7 +361,7 @@ class _$_DataArticleState implements _DataArticleState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Article article)? data,
-    TResult Function()? loadFailure,
+    TResult Function(String message)? loadFailure,
     required TResult orElse(),
   }) {
     if (data != null) {
@@ -410,6 +412,7 @@ abstract class _$LoadFailureArticleStateCopyWith<$Res> {
   factory _$LoadFailureArticleStateCopyWith(_LoadFailureArticleState value,
           $Res Function(_LoadFailureArticleState) then) =
       __$LoadFailureArticleStateCopyWithImpl<$Res>;
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -423,25 +426,50 @@ class __$LoadFailureArticleStateCopyWithImpl<$Res>
   @override
   _LoadFailureArticleState get _value =>
       super._value as _LoadFailureArticleState;
+
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_LoadFailureArticleState(
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_LoadFailureArticleState implements _LoadFailureArticleState {
-  const _$_LoadFailureArticleState();
+  const _$_LoadFailureArticleState({required this.message});
+
+  @override
+  final String message;
 
   @override
   String toString() {
-    return 'ArticleState.loadFailure()';
+    return 'ArticleState.loadFailure(message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _LoadFailureArticleState);
+    return identical(this, other) ||
+        (other is _LoadFailureArticleState &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LoadFailureArticleStateCopyWith<_LoadFailureArticleState> get copyWith =>
+      __$LoadFailureArticleStateCopyWithImpl<_LoadFailureArticleState>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -449,9 +477,9 @@ class _$_LoadFailureArticleState implements _LoadFailureArticleState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(Article article) data,
-    required TResult Function() loadFailure,
+    required TResult Function(String message) loadFailure,
   }) {
-    return loadFailure();
+    return loadFailure(message);
   }
 
   @override
@@ -460,11 +488,11 @@ class _$_LoadFailureArticleState implements _LoadFailureArticleState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(Article article)? data,
-    TResult Function()? loadFailure,
+    TResult Function(String message)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadFailure != null) {
-      return loadFailure();
+      return loadFailure(message);
     }
     return orElse();
   }
@@ -497,7 +525,13 @@ class _$_LoadFailureArticleState implements _LoadFailureArticleState {
 }
 
 abstract class _LoadFailureArticleState implements ArticleState {
-  const factory _LoadFailureArticleState() = _$_LoadFailureArticleState;
+  const factory _LoadFailureArticleState({required String message}) =
+      _$_LoadFailureArticleState;
+
+  String get message => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$LoadFailureArticleStateCopyWith<_LoadFailureArticleState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
