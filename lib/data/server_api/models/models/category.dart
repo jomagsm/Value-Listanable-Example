@@ -10,7 +10,7 @@ class Category {
   int id;
   String? name;
   int? languages;
-  bool active = true;
+  bool active = false;
 
   Category({required this.id, this.name, this.languages});
 
@@ -28,19 +28,43 @@ class Category {
       };
 }
 
-List<Category> getCategoryByLang(String locale, List<Category> categoryList){
-  List<Category> sortList= [];
+List<Category> getCategoryByLang(String locale, List<Category> categoryList) {
+  List<Category> sortList = [];
   int lang = 0;
-  if(locale == 'kg'){
+  if (locale == 'kg') {
     lang = 1;
+    Category allCategory = Category(
+      id: 99,
+      name: 'Баары',
+      languages: 2,
+    );
+    allCategory.active = true;
+
+    sortList.add(allCategory);
+  } else {
+    lang = 2;
+    Category allCategory = Category(
+      id: 99,
+      name: 'Все',
+      languages: 1,
+    );
+    allCategory.active = true;
+    sortList.add(allCategory);
   }
-  else{
-   lang = 2;
-  }
-  for(var i in categoryList){
-    if (i.languages == lang){
+  for (var i in categoryList) {
+    if (i.languages == lang) {
       sortList.add(i);
     }
   }
   return sortList;
+}
+
+
+allCategorySelect(List<Category> categoryList){
+  for(var category in categoryList){
+    if (category.id !=99){
+      category.active = false;
+    }
+  }
+  
 }

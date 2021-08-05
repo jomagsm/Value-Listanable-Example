@@ -146,7 +146,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 PopupMenuButton(
                     onSelected: (String value) {
-                      provider.setLocale(provider.getLocale(value));
+                      provider.setLocale(value);
                       context.read<NewsBloc>()
                         ..add(NewsEvent.initial(
                             locale: provider.getLocaleCode()));
@@ -193,10 +193,10 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       margin: EdgeInsets.symmetric(horizontal: 10),
                       child: TextButton(
                           style: TextButton.styleFrom(
-                            primary: category![index].active
+                            primary: !category![index].active
                                 ? ColorPalette.gray
                                 : ColorPalette.white,
-                            backgroundColor: category![index].active
+                            backgroundColor: !category![index].active
                                 ? ColorPalette.unselectBottom
                                 : ColorPalette.green,
                             shape: RoundedRectangleBorder(

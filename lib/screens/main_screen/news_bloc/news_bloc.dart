@@ -14,7 +14,8 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   final _repository = Repository();
   List<Article> _articles = [];
   List<Category> _category = [];
-  LocaleProvider? _local = LocaleProvider();
+  String? _locale;
+  
 
   @override
   Stream<NewsState> mapEventToState(NewsEvent event) async* {
@@ -26,23 +27,36 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
 
   Stream<NewsState> _mapInitialNewsScreenEvent(_InitialNewsEvent event) async* {
     yield NewsState.loading();
-    String _locale = event.locale;
-    List<Category> _allCategory = await _repository.getAllCategory(_locale);
-    _articles = await _repository.getArticles(_locale);
-    _category = getCategoryByLang(_locale, _allCategory);
+    _locale = event.locale;
+    List<Category> _allCategory = await _repository.getAllCategory(_locale!);
+    _articles = await _repository.getArticles(_locale!);
+    _category = getCategoryByLang(_locale!, _allCategory);
     yield NewsState.data(category: _category, articles: _articles);
   }
 
   Stream<NewsState> _mapSelectCategoryEvent(_SelectCategoryEvent event) async* {
     yield NewsState.loading();
     _articles = [];
+    int _counter = 0;
     for (var i in _category) {
       if (i.id == event.id) {
         i.active = !i.active;
+        if(i.id == 99 && i.active){
+          allCategorySelect(_category);
+          _articles = await _repository.getArticles(_locale!);
+          _counter ++;
+        }
       }
-      if (!i.active) {
-        _articles += await _repository.getFilterDate(i.id);
+      if (i.active && i.id != 99) {
+        _category.first.active = false;
+        _counter ++;
+        _articles += await _repository.getFilterDate(i.id, _locale!);
       }
+    }
+    if (_counter == 0){
+      _category.first.active=true;
+      allCategorySelect(_category);
+      _articles = await _repository.getArticles(_locale!);
     }
     yield NewsState.data(category: _category, articles: _articles);
   }

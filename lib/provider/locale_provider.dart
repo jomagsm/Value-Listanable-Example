@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:value_listanable_example/l10n/l10n.dart';
 
 class LocaleProvider extends ChangeNotifier {
   Locale? _locale = Locale('ru');
@@ -7,19 +6,15 @@ class LocaleProvider extends ChangeNotifier {
   Locale get locale => _locale == null ? Locale('ru') : _locale!;
 
   getLocale(String code) {
-    Locale locale = Locale('ru');
     if (code == 'KG') {
-      locale = Locale('kk');
+      return Locale('kk');
     } else if (code == 'RU') {
-      locale = Locale('RU');
+      return Locale('ru');
     }
-    return locale;
   }
 
-  void setLocale(Locale locale) {
-    if (!L10n.all.contains(locale)) return;
-
-    _locale = locale;
+  void setLocale(String code) {
+    _locale = getLocale(code);
     notifyListeners();
   }
 

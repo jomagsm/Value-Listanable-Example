@@ -53,10 +53,10 @@ class ServerApi {
     }
   }
 
-  Future<List<Article>> getFilterDate(int id) async {
+  Future<List<Article>> getFilterDate(int id, String lang) async {
     try {
-      Response<String> response = await _dio.get("/news/list?lang=kg",
-          queryParameters: {'category': id});
+      Response<String> response = await _dio.get("/news/list",
+          queryParameters: {'lang': lang,'category': id});
 
       return articleFromJson(response.toString());
     } catch (e) {

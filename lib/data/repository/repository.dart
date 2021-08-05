@@ -32,9 +32,9 @@ class Repository {
     }
   }
 
-  Future<List<Article>> getFilterDate(int id) async {
+  Future<List<Article>> getFilterDate(int id, String lang) async {
     try {
-      final response = await _serviceApi.getFilterDate(id);
+      final response = await _serviceApi.getFilterDate(id, lang);
       return response;
     } catch (e) {
       throw (e);
