@@ -61,7 +61,7 @@ class _Body extends StatelessWidget {
                         Text(error.toString()),
                         ElevatedButton(
                             onPressed: () {
-                              ArticleBloc()
+                             context.read<ArticleBloc>()
                                 ..add(
                                     ArticleEvent.initial(idArticle: idArticle));
                             },

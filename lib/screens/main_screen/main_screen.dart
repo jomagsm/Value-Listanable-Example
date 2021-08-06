@@ -29,6 +29,21 @@ class MainScreen extends StatelessWidget {
         }, builder: (context, state) {
           return state.maybeMap(
               loadFailure: (error) => Scaffold(
+                    appBar: AppBar(
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        leading: IconButton(
+                          padding: new EdgeInsets.all(0.0),
+                          color: ColorPalette.blue,
+                          icon: new Icon(Icons.chevron_left_sharp, size: 25.0),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MainScreen()),
+                            );
+                          },
+                        )),
                     body: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -36,9 +51,11 @@ class MainScreen extends StatelessWidget {
                         Text(error.toString()),
                         ElevatedButton(
                             onPressed: () {
-                              NewsBloc()
-                                ..add(NewsEvent.initial(
-                                    locale: provider.getLocaleCode()));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MainScreen()),
+                              );
                             },
                             child: Text('Повторить'))
                       ],
@@ -49,17 +66,23 @@ class MainScreen extends StatelessWidget {
                   ),
               loading: (_) => customCircularProgress(),
               data: (_data) {
-                return Scaffold(
-                  appBar: _CustomAppBar(
-                    category: _data.category,
-                  ),
-                  body: BlocProvider.value(
-                    value: NewsBloc(),
-                    child: _MainScreenBody(
-                      articles: _data.articles,
-                    ),
-                  ),
-                );
+                return RefreshIndicator(
+                    onRefresh: () async {
+                      context.read<NewsBloc>()
+                        ..add(NewsEvent.initial(
+                            locale: provider.getLocaleCode()));
+                    },
+                    child: Scaffold(
+                      appBar: _CustomAppBar(
+                        category: _data.category,
+                      ),
+                      body: BlocProvider.value(
+                        value: NewsBloc(),
+                        child: _MainScreenBody(
+                          articles: _data.articles,
+                        ),
+                      ),
+                    ));
               });
         }));
   }
@@ -127,7 +150,6 @@ class _MainScreenBody extends StatelessWidget {
                             );
                           },
                         )
-                        // IconButton(icon: Icon(), onPressed: () {})
                       ],
                     ),
                   )
@@ -183,18 +205,6 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                             value: 'RU',
                           )
                         ])
-                // _LangPopUpMenu(),
-                // _LanguagePickerWidget(),
-                // InkWell(
-                //   onTap: () {_LangPopUpMenu();},
-                // child: Container(
-                //   width: 24,
-                //   height: 24,
-                //   decoration: BoxDecoration(
-                //       image: DecorationImage(
-                //           image: AssetImage('assets/img/lang.png'))),
-                //   ),
-                // )
               ],
             ),
             Container(
@@ -237,39 +247,3 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(120);
 }
-
-// class _LanguagePickerWidget extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     final provider = Provider.of<LocaleProvider>(context);
-//     final List<String> _dropDownValue = ['KG', 'RU'];
-//     // final locale = provider.locale ?? Locale('en');
-
-//     return DropdownButtonHideUnderline(
-//       child: DropdownButton(
-//         value: _dropDownValue.first,
-//         icon: Container(width: 12),
-//         items: _dropDownValue.map(
-//           (locale) {
-//             return DropdownMenuItem(
-//               child: Center(
-//                 child: Text(
-//                   locale,
-//                   style: TextStyle(fontSize: 32),
-//                 ),
-//               ),
-//               value: locale,
-//               onTap: () {
-//                 final provider =
-//                     Provider.of<LocaleProvider>(context, listen: false);
-
-//                 // provider.setLocale(locale);
-//               },
-//             );
-//           },
-//         ).toList(),
-//         onChanged: (_) {},
-//       ),
-//     );
-//   }
-// }
