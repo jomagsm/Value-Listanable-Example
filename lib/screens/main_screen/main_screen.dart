@@ -33,9 +33,9 @@ class MainScreen extends StatelessWidget {
                         backgroundColor: Colors.transparent,
                         elevation: 0,
                         leading: IconButton(
-                          padding: new EdgeInsets.all(0.0),
+                          padding: const EdgeInsets.all(0.0),
                           color: ColorPalette.blue,
-                          icon: new Icon(Icons.chevron_left_sharp, size: 25.0),
+                          icon: const Icon(Icons.chevron_left_sharp, size: 25.0),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -57,7 +57,7 @@ class MainScreen extends StatelessWidget {
                                     builder: (context) => MainScreen()),
                               );
                             },
-                            child: Text('Повторить'))
+                            child: const Text('Повторить'))
                       ],
                     ),
                   ),
@@ -100,7 +100,7 @@ class _MainScreenBody extends StatelessWidget {
         itemCount: articles!.length,
         itemBuilder: (_, index) {
           return Container(
-            padding: EdgeInsets.symmetric(horizontal: 22),
+            padding: const EdgeInsets.symmetric(horizontal: 22),
             child: InkWell(
               onTap: () {
                 Navigator.push(
@@ -172,7 +172,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final provider = Provider.of<LocaleProvider>(context);
     return SafeArea(
       child: Container(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Column(
           children: [
             Row(
@@ -192,7 +192,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: Container(
                         width: 24,
                         height: 24,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             image: DecorationImage(
                                 image: AssetImage('assets/img/lang.png')))),
                     itemBuilder: (context) => [
@@ -208,7 +208,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 20),
               height: 30,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -216,7 +216,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   itemCount: category!.length,
                   itemBuilder: (_, index) {
                     return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
                       child: TextButton(
                           style: TextButton.styleFrom(
                             primary: !category![index].active
@@ -245,5 +245,5 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(120);
+  Size get preferredSize => const Size.fromHeight(120);
 }

@@ -61,7 +61,7 @@ class _Body extends StatelessWidget {
                         Text(error.toString()),
                         ElevatedButton(
                             onPressed: () {
-                             context.read<ArticleBloc>()
+                              context.read<ArticleBloc>()
                                 ..add(
                                     ArticleEvent.initial(idArticle: idArticle));
                             },
@@ -75,7 +75,7 @@ class _Body extends StatelessWidget {
               loading: (_) => customCircularProgress(),
               data: (_data) {
                 return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
